@@ -298,11 +298,9 @@ Computes an assignment cost matrix across all active rescue units:
 - **Problem Statement:** Track 1: Emergency Response Coordination After Disasters
 - **Project Title:** AegisOps (Offline-First Disaster Coordination & DTN Mesh Platform)
 - **Institution:** Mangalore Institute of Technology & Engineering (MITE)
-- **Team Leader:** Thwish rai
-- **Team Members:** ujwal naik, shraddha, ninad d k
+- **Team Leader:** Ujwal Naik
+- **Team Members:** Thwish rai, shraddha, ninad d k
 - **Public Repository:** https://github.com/ujwal-naik/aegisops
-- **Official Presentation Deck:** [AegisOps_Official_Pitch.pptx](AegisOps_Official_Pitch.pptx)
-- **Slide Previews:** Check [docs/slides/](docs/slides/) for high-resolution PNG previews of all 7 slides.
 - **Submission Date:** October 2026
 - **License:** MIT Open Source
 
