@@ -19,15 +19,19 @@
   padding: 0;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
+html, body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Page stays locked so map is 100% sticky */
   background-color: var(--bg-dark);
+  font-family: 'Inter', sans-serif;
   color: var(--text-primary);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: auto;
+}
+
+/* Tactical Dark-Mode Shader for OpenStreetMap (Zero API key, Zero Watermark) */
+.osm-tactical-tiles .leaflet-tile {
+  filter: invert(100%) hue-rotate(180deg) brightness(88%) contrast(92%);
 }
 
 /* Custom Scrollbars */
@@ -52,6 +56,7 @@ body {
 
 /* Header */
 .topbar {
+  height: 60px;
   min-height: 60px;
   background: rgba(17, 24, 39, 0.95);
   border-bottom: 1px solid var(--border-color);
@@ -61,8 +66,7 @@ body {
   padding: 0 1.5rem;
   z-index: 1000;
   backdrop-filter: blur(8px);
-  position: sticky;
-  top: 0;
+  flex-shrink: 0;
 }
 
 .logo-badge {
@@ -89,17 +93,19 @@ body {
 /* Main Grid Layout */
 .main-container {
   display: flex;
-  flex: 1;
-  min-height: calc(100vh - 60px);
+  height: calc(100vh - 60px);
+  width: 100vw;
+  overflow: hidden; /* Prevents outer scrolling */
   position: relative;
 }
 
+/* LEFT: MAP (Sticky & Non-Scrollable) */
 .map-container {
   flex: 6;
+  height: 100%;
   position: relative;
-  min-height: 500px;
-  background: #0d121f;
-  overflow: hidden;
+  background: #090e17;
+  overflow: hidden; /* Sticky & non-scrollable */
 }
 
 #map {
@@ -113,14 +119,17 @@ body {
   z-index: 1;
 }
 
+/* RIGHT: ALERTS FEED (Independently Scrollable) */
 .sidebar {
   flex: 4;
   min-width: 440px;
   max-width: 520px;
+  height: 100%;
   background: var(--bg-card);
   border-left: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* Header pinned, alerts scroll inside */
 }
 
 /* Triage Metric Cards */
@@ -128,13 +137,14 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.5rem;
-  padding: 1rem;
+  padding: 0.85rem 1rem;
   border-bottom: 1px solid var(--border-color);
   background: rgba(15, 23, 42, 0.6);
+  flex-shrink: 0; /* Pinned at top */
 }
 
 .metric-card {
-  padding: 0.75rem;
+  padding: 0.65rem 0.5rem;
   border-radius: 6px;
   background: rgba(30, 41, 59, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.05);
@@ -147,13 +157,13 @@ body {
 .metric-card.fleet { border-left: 3px solid var(--cyan-accent); }
 
 .metric-card .val {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   font-family: 'JetBrains Mono', monospace;
 }
 
 .metric-card .label {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-secondary);
@@ -163,9 +173,10 @@ body {
 .tabs-bar {
   display: flex;
   gap: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.65rem 1rem;
   border-bottom: 1px solid var(--border-color);
   background: rgba(17, 24, 39, 0.9);
+  flex-shrink: 0; /* Pinned below metrics */
 }
 
 .tab-btn {
@@ -191,13 +202,16 @@ body {
   border-color: rgba(6, 182, 212, 0.4);
 }
 
+/* ALERTS FEED: FULLY SCROLLABLE WITH MOUSE WHEEL / TOUCH */
 .incidents-list {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: scroll !important;
+  overflow-x: hidden;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Incident Cards */
@@ -380,29 +394,27 @@ body {
 /* Tablet Breakpoint (<= 1024px) */
 @media (max-width: 1024px) {
   .mobile-nav-bar {
-    display: flex;
-    position: sticky;
-    top: 56px;
-    z-index: 999;
+    display: none;
   }
 
   .main-container {
-    height: auto !important;
-    min-height: auto;
+    height: calc(100vh - 60px);
     flex-direction: column;
-    overflow: visible !important;
+    overflow: hidden;
   }
 
+  /* Map is sticky non-scrollable at top */
   .map-container {
     width: 100%;
-    height: 52vh;
-    min-height: 380px;
-    max-height: 540px;
+    height: 42vh;
+    min-height: 250px;
     display: block !important;
     flex: none;
     position: relative;
+    overflow: hidden;
   }
 
+  /* Sidebar with alerts fills remaining height and scrolls */
   .sidebar {
     min-width: 100% !important;
     max-width: 100% !important;
@@ -410,13 +422,14 @@ body {
     border-left: none;
     border-top: 1px solid var(--border-color);
     display: flex !important;
-    height: auto !important;
-    overflow: visible !important;
+    flex: 1;
+    height: calc(100vh - 42vh - 60px);
+    overflow: hidden;
   }
 
   .incidents-list {
-    max-height: none !important;
-    overflow: visible !important;
+    flex: 1;
+    overflow-y: scroll !important;
   }
 }
 

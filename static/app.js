@@ -15,28 +15,12 @@ function initMap() {
       attributionControl: true
     }).setView([centerLat, centerLon], 13);
 
-    // Primary: CartoDB Dark Matter
-    const cartoDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    // 100% Free OpenStreetMap Tiles - ZERO API KEY, ZERO WATERMARK!
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      subdomains: 'abcd',
-      attribution: '&copy; CartoDB &copy; OpenStreetMap'
-    });
-
-    // Fallback: OpenStreetMap
-    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap contributors'
-    });
-
-    cartoDark.addTo(map);
-
-    cartoDark.on('tileerror', function() {
-      console.warn('CartoDB tile load failed, falling back to OpenStreetMap...');
-      if (!map.hasLayer(osm)) {
-        map.removeLayer(cartoDark);
-        osm.addTo(map);
-      }
-    });
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      className: 'osm-tactical-tiles'
+    }).addTo(map);
 
     markerLayer = L.layerGroup().addTo(map);
 
