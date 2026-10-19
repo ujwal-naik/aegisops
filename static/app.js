@@ -79,6 +79,9 @@ async function refreshDashboard() {
     incidentsData = incRes.incidents || [];
     unitsData = unitsRes.units || [];
 
+    const mobileCountEl = document.getElementById('mobile-inc-count');
+    if (mobileCountEl) mobileCountEl.innerText = incidentsData.length;
+
     renderFeed();
     renderMap(geoRes);
   } catch (err) {
@@ -242,8 +245,52 @@ function setTab(tab, btn) {
 }
 
 function focusIncident(lat, lon) {
+  if (window.innerWidth <= 1024) {
+    switchMobileView('map');
+  }
   map.flyTo([lat, lon], 15, { duration: 1.2 });
 }
+
+// Mobile View Switcher (<= 1024px)
+let activeMobileView = 'map';
+
+function switchMobileView(view) {
+  activeMobileView = view;
+  const mapContainer = document.querySelector('.map-container');
+  const sidebar = document.querySelector('.sidebar');
+  const btnMap = document.getElementById('btn-view-map');
+  const btnFeed = document.getElementById('btn-view-feed');
+
+  if (window.innerWidth <= 1024) {
+    if (view === 'map') {
+      if (mapContainer) mapContainer.style.display = 'block';
+      if (sidebar) sidebar.style.display = 'none';
+      if (btnMap) btnMap.classList.add('active');
+      if (btnFeed) btnFeed.classList.remove('active');
+      setTimeout(() => { if (map) map.invalidateSize(); }, 150);
+    } else {
+      if (mapContainer) mapContainer.style.display = 'none';
+      if (sidebar) sidebar.style.display = 'flex';
+      if (btnFeed) btnFeed.classList.add('active');
+      if (btnMap) btnMap.classList.remove('active');
+    }
+  } else {
+    if (mapContainer) mapContainer.style.display = 'block';
+    if (sidebar) sidebar.style.display = 'flex';
+  }
+}
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 1024) {
+    const mapContainer = document.querySelector('.map-container');
+    const sidebar = document.querySelector('.sidebar');
+    if (mapContainer) mapContainer.style.display = 'block';
+    if (sidebar) sidebar.style.display = 'flex';
+  } else {
+    switchMobileView(activeMobileView);
+  }
+  if (map) map.invalidateSize();
+});
 
 // Actions
 async function triggerAutoDispatch() {

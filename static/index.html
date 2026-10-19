@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AegisOps // Tactical Disaster Coordination Engine</title>
-  <link rel="stylesheet" href="/static/vendor/leaflet.css?v=2" />
-  <link rel="stylesheet" href="/static/style.css?v=2" />
-  <script src="/static/vendor/leaflet.js?v=2"></script>
+  <link rel="stylesheet" href="/static/vendor/leaflet.css?v=3" />
+  <link rel="stylesheet" href="/static/style.css?v=3" />
+  <script src="/static/vendor/leaflet.js?v=3"></script>
 </head>
 <body>
   <!-- Header Bar -->
@@ -14,26 +14,36 @@
     <div class="logo-badge">
       <div class="pulsing-dot"></div>
       <h1 class="mono" style="font-size: 1.05rem; font-weight: 700; letter-spacing: 0.05em;">
-        AEGISOPS <span style="color: var(--cyan-accent); font-weight: 400;">// DISASTER TACTICAL OS</span>
+        AEGISOPS <span class="subtitle" style="color: var(--cyan-accent); font-weight: 400;">// DISASTER TACTICAL OS</span>
       </h1>
-      <span class="badge badge-unit mono" style="font-size: 0.65rem;">OFFLINE-FIRST DTN MESH</span>
+      <span class="badge badge-unit mono" style="font-size: 0.65rem;">OFFLINE MESH</span>
     </div>
 
-    <div style="display: flex; align-items: center; gap: 0.6rem;">
-      <button class="btn btn-primary" onclick="openReportModal()">
-        <span>+ Submit SOS Report</span>
+    <div class="topbar-actions">
+      <button class="btn btn-primary" onclick="openReportModal()" title="Submit Emergency Report">
+        <span>+ SOS Report</span>
       </button>
-      <button class="btn btn-danger" onclick="triggerAutoDispatch()">
-        <span>⚡ Run ICS Auto-Dispatch</span>
+      <button class="btn btn-danger" onclick="triggerAutoDispatch()" title="Run ICS Dispatch">
+        <span>⚡ Auto-Dispatch</span>
       </button>
-      <button class="btn btn-dark" onclick="simulateMeshSync()">
-        <span>🔄 Simulate Drone Sync</span>
+      <button class="btn btn-dark" onclick="simulateMeshSync()" title="Simulate Mesh Sync">
+        <span>🔄 Sync</span>
       </button>
-      <button class="btn btn-dark" onclick="seedScenario()">
-        <span>🎲 Reload Scenario</span>
+      <button class="btn btn-dark" onclick="seedScenario()" title="Reload Scenario">
+        <span>🎲 Reset</span>
       </button>
     </div>
   </header>
+
+  <!-- Mobile View Switcher (Visible on <= 1024px screens) -->
+  <nav class="mobile-nav-bar">
+    <button class="mobile-nav-btn active" id="btn-view-map" onclick="switchMobileView('map')">
+      <span>🗺️ Live Map</span>
+    </button>
+    <button class="mobile-nav-btn" id="btn-view-feed" onclick="switchMobileView('feed')">
+      <span>📋 Incidents Feed (<span id="mobile-inc-count">0</span>)</span>
+    </button>
+  </nav>
 
   <!-- Main View -->
   <main class="main-container">
@@ -119,6 +129,6 @@
     </div>
   </div>
 
-  <script src="/static/app.js?v=2"></script>
+  <script src="/static/app.js?v=3"></script>
 </body>
 </html>
