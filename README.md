@@ -187,12 +187,6 @@ Computes an assignment cost matrix across all active rescue units:
 
 ---
 
-## 🗺️ Offline Round 2 Roadmap
-- [x] **Round 1 (Completed):** End-to-end software platform, START triage engine, ICS dispatcher, GIS dashboard, terminal CLI, test suite, and official presentation.
-- [ ] **Physical Radio Hardware:** Direct serial bridge to ESP32 LoRa SX1262 transceiver modules for sub-GHz mesh broadcasting (868/915 MHz).
-- [ ] **Offline Map Vector Tiles:** Embedded local vector mbtiles package providing full street-level zoom without external map tiles.
-- [ ] **Thermal Drone Pipeline:** Computer vision survivor localization from low-altitude drone video feeds.
-
 ---
 
 ## 👥 Team & Submission Information
