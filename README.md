@@ -1,6 +1,8 @@
 # AegisOps // Tactical Emergency Coordination & Mesh Operating System
 > **Problem Statement #1:** Emergency Response Coordination After Disasters  
-> **Team Vanguard** | Hackathon Round 1 Screening & Shortlisting
+> **Institution:** Mangalore Institute of Technology & Engineering (MITE)  
+> **Team Leader:** Thwish rai | **Members:** ujwal naik, shraddha, ninad d k  
+> **Official Presentation:** [AegisOps_Official_Pitch.pptx](AegisOps_Official_Pitch.pptx)  
 
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
@@ -262,11 +264,11 @@ python -m cli.aegisctl report "Water rising waist high! 4 people trapped on roof
 python -m cli.aegisctl dispatch
 ```
 
-### 5. Generate / Regenerate Hackathon Presentation
+### 5. Generate / Regenerate Official Hackathon Presentation
 ```bash
-python presentation/generate_deck.py
+python build_clean_deck.py
 ```
-The output file `AegisOps_Disaster_Coordination_Pitch.pptx` will be created in the root directory.
+The official presentation `AegisOps_Official_Pitch.pptx` (and `AegisOps_Pitch_Deck.pptx`) will be generated directly using the official hackathon template, including all team info, architecture diagrams, and the prototype walkthrough.
 
 ---
 
@@ -293,7 +295,14 @@ Computes an assignment cost matrix across all active rescue units:
 ---
 
 ## 👥 Team & Submission Information
-- **Problem Statement:** 1. Emergency Response Coordination After Disasters
-- **Team Name:** Team Vanguard
+- **Problem Statement:** Track 1: Emergency Response Coordination After Disasters
+- **Project Title:** AegisOps (Offline-First Disaster Coordination & DTN Mesh Platform)
+- **Institution:** Mangalore Institute of Technology & Engineering (MITE)
+- **Team Leader:** Thwish rai
+- **Team Members:** ujwal naik, shraddha, ninad d k
+- **Public Repository:** https://github.com/ujwal-naik/aegisops
+- **Official Presentation Deck:** [AegisOps_Official_Pitch.pptx](AegisOps_Official_Pitch.pptx)
+- **Slide Previews:** Check [docs/slides/](docs/slides/) for high-resolution PNG previews of all 7 slides.
 - **Submission Date:** October 2026
 - **License:** MIT Open Source
+

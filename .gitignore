@@ -41,3 +41,14 @@ data/*.db
 .DS_Store
 Thumbs.db
 ~$*
+
+# Local state & temporary exports
+aegisops_state.json
+slides_exported/
+shape_img_*.png
+test_*.py
+test_*.pptx
+dump_*.py
+template_*.txt
+checklist.txt
+template.pptx
