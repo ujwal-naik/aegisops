@@ -121,7 +121,7 @@ hackton/
 ### 1. Installation
 Clone the repository and install the lightweight requirements:
 ```bash
-git clone https://github.com/vanguard-rescue/aegisops.git
+git clone https://github.com/ujwal-naik/aegisops.git
 cd aegisops
 
 # Install dependencies

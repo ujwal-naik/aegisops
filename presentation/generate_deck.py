@@ -426,7 +426,7 @@ def create_deck(output_path="AegisOps_Disaster_Coordination_Pitch.pptx"):
         p.space_after = Pt(8)
 
     p_links = tf10.add_paragraph()
-    p_links.text = "\nGitHub Repository: https://github.com/vanguard-rescue/aegisops"
+    p_links.text = "\nGitHub Repository: https://github.com/ujwal-naik/aegisops"
     p_links.font.size = Pt(16)
     p_links.font.bold = True
     p_links.font.color.rgb = CYAN_ACCENT
