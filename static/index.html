@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AegisOps // Tactical Disaster Coordination Engine</title>
-  <link rel="stylesheet" href="/static/vendor/leaflet.css?v=3" />
-  <link rel="stylesheet" href="/static/style.css?v=3" />
-  <script src="/static/vendor/leaflet.js?v=3"></script>
+  <link rel="stylesheet" href="/static/vendor/leaflet.css?v=4" />
+  <link rel="stylesheet" href="/static/style.css?v=4" />
+  <script src="/static/vendor/leaflet.js?v=4"></script>
 </head>
 <body>
   <!-- Header Bar -->
@@ -35,25 +35,25 @@
     </div>
   </header>
 
-  <!-- Mobile View Switcher (Visible on <= 1024px screens) -->
+  <!-- Quick Jump Bar (Visible on <= 1024px screens) -->
   <nav class="mobile-nav-bar">
-    <button class="mobile-nav-btn active" id="btn-view-map" onclick="switchMobileView('map')">
-      <span>🗺️ Live Map</span>
+    <button class="mobile-nav-btn" onclick="scrollToSection('map-section')">
+      <span>🗺️ Scroll to Map</span>
     </button>
-    <button class="mobile-nav-btn" id="btn-view-feed" onclick="switchMobileView('feed')">
-      <span>📋 Incidents Feed (<span id="mobile-inc-count">0</span>)</span>
+    <button class="mobile-nav-btn" onclick="scrollToSection('sidebar-section')">
+      <span>📋 Scroll to Feed (<span id="mobile-inc-count">0</span>)</span>
     </button>
   </nav>
 
   <!-- Main View -->
   <main class="main-container">
     <!-- Map Section -->
-    <section class="map-container">
+    <section class="map-container" id="map-section">
       <div id="map"></div>
     </section>
 
     <!-- Sidebar Section -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar-section">
       <!-- Live Metrics Header -->
       <div class="metrics-row">
         <div class="metric-card red">
@@ -129,6 +129,6 @@
     </div>
   </div>
 
-  <script src="/static/app.js?v=3"></script>
+  <script src="/static/app.js?v=4"></script>
 </body>
 </html>
