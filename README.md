@@ -85,17 +85,17 @@ A core judging criterion for disaster response is **resilience when all external
 
 ```mermaid
 flowchart LR
-    subgraph OfflineZone["Disaster Sector (No Internet / No Grid)"]
-        nodeA["Command Laptop (AegisOps)"]
+    subgraph OfflineZone["Disaster Sector - Zero Grid & No Internet"]
+        nodeA["Command Laptop EOC"]
         nodeB["Mobile Van Node"]
         nodeC["Drone LoRa Relay"]
         citizen["Citizen Smartphone"]
     end
 
-    citizen -->|1. Connects to Local Wi-Fi (RESCUE_SOS_WIFI)| nodeB
-    citizen -.->|No App Install / Captive Portal PWA| nodeB
-    nodeB <-->|2. Opportunistic LoRa / BLE P2P Sync| nodeC
-    nodeC <-->|3. Vector Clock Delta Exchange| nodeA
+    citizen -->|"1. Connects to Local Wi-Fi RESCUE_SOS_WIFI"| nodeB
+    citizen -.->|"Zero App Install Captive Portal PWA"| nodeB
+    nodeB <-->|"2. Opportunistic LoRa / BLE P2P Sync"| nodeC
+    nodeC <-->|"3. Vector Clock Delta Exchange"| nodeA
 ```
 
 ### 1. Zero Cloud API Keys Required
@@ -147,18 +147,18 @@ flowchart TD
         FleetUnits["Rescue Units: Boats, USAR Squads, ALS Ambulances"]
     end
 
-    Citizen -->|Local Wi-Fi / Hotspot| Ingest
-    FieldScout -->|Low-Bandwidth Radio / Packet| Ingest
-    DroneMule <-->|Opportunistic Vector Clock Sync| Ingest
+    Citizen -->|"Local Wi-Fi / Hotspot"| Ingest
+    FieldScout -->|"Low-Bandwidth Radio / Packet"| Ingest
+    DroneMule <-->|"Opportunistic Vector Clock Sync"| Ingest
 
     Ingest --> NLP
-    NLP -->|Triage: RED / YELLOW / GREEN / BLACK| Dedup
-    Dedup -->|Clustered & De-noised| Store
+    NLP -->|"Triage: RED / YELLOW / GREEN / BLACK"| Dedup
+    Dedup -->|"Clustered & De-noised"| Store
     Store --> Dispatcher
-    Dispatcher -->|Optimal Capability & ETA Match| FleetUnits
+    Dispatcher -->|"Optimal Capability & ETA Match"| FleetUnits
 
-    Store <-->|Live Telemetry & GeoJSON| WebUI
-    Store <-->|Local Serial / IPC| CLI
+    Store <-->|"Live Telemetry & GeoJSON"| WebUI
+    Store <-->|"Local Serial / IPC"| CLI
 ```
 
 ---
@@ -289,14 +289,6 @@ Computes an assignment cost matrix across all active rescue units:
 - Matches required capability: $\text{CapabilityMatch}(U_{\text{type}}, I_{\text{req}})$
 - Minimizes Travel Time: $\text{ETA} = \left(\frac{\text{Distance}(\text{km})}{\text{Speed}(\text{km/h})}\right) \times 60$
 - Enforces triage priority ordering: $P_{\text{RED}} \gg P_{\text{YELLOW}} \gg P_{\text{GREEN}}$.
-
----
-
-## 🗺️ Offline Round 2 Roadmap
-- [x] **Round 1 (Completed):** End-to-end software platform, START triage engine, ICS dispatcher, GIS dashboard, terminal CLI, test suite, and official presentation.
-- [ ] **Physical Radio Hardware:** Direct serial bridge to ESP32 LoRa SX1262 transceiver modules for sub-GHz mesh broadcasting (868/915 MHz).
-- [ ] **Offline Map Vector Tiles:** Embedded local vector mbtiles package providing full street-level zoom without external map tiles.
-- [ ] **Thermal Drone Pipeline:** Computer vision survivor localization from low-altitude drone video feeds.
 
 ---
 
