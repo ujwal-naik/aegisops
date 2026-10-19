@@ -6,21 +6,55 @@ let unitsData = [];
 
 // Initialize Map
 function initMap() {
-  const centerLat = 12.8750;
-  const centerLon = 74.8520;
+  try {
+    const centerLat = 12.8750;
+    const centerLon = 74.8520;
 
-  map = L.map('map', {
-    zoomControl: true,
-    attributionControl: false
-  }).setView([centerLat, centerLon], 13);
+    map = L.map('map', {
+      zoomControl: true,
+      attributionControl: true
+    }).setView([centerLat, centerLon], 13);
 
-  // CartoDB Dark Matter tiles (offline-friendly fallback)
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19,
-    subdomains: 'abcd',
-  }).addTo(map);
+    // Primary: CartoDB Dark Matter
+    const cartoDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 19,
+      subdomains: 'abcd',
+      attribution: '&copy; CartoDB &copy; OpenStreetMap'
+    });
 
-  markerLayer = L.layerGroup().addTo(map);
+    // Fallback: OpenStreetMap
+    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    });
+
+    cartoDark.addTo(map);
+
+    cartoDark.on('tileerror', function() {
+      console.warn('CartoDB tile load failed, falling back to OpenStreetMap...');
+      if (!map.hasLayer(osm)) {
+        map.removeLayer(cartoDark);
+        osm.addTo(map);
+      }
+    });
+
+    markerLayer = L.layerGroup().addTo(map);
+
+    // Force map to recalculate container dimensions
+    [100, 300, 800, 1500].forEach(delay => {
+      setTimeout(() => {
+        if (map) map.invalidateSize();
+      }, delay);
+    });
+
+    window.addEventListener('resize', () => {
+      if (map) map.invalidateSize();
+    });
+
+    console.log('Tactical GIS map initialized successfully.');
+  } catch (err) {
+    console.error('Failed to initialize Leaflet map:', err);
+  }
 }
 
 // Fetch all system data
@@ -316,9 +350,15 @@ async function submitReport(e) {
   }
 }
 
-// Initialize on DOM load
-window.addEventListener('DOMContentLoaded', () => {
+// Initialize on DOM load or immediately if already ready
+function boot() {
   initMap();
   refreshDashboard();
   setInterval(refreshDashboard, 5000);
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
