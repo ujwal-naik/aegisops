@@ -268,7 +268,7 @@ python -m cli.aegisctl dispatch
 ```bash
 python build_clean_deck.py
 ```
-The official presentation `AegisOps_Official_Pitch.pptx` (and `AegisOps_Pitch_Deck.pptx`) will be generated directly using the official hackathon template, including all team info, architecture diagrams, and the prototype walkthrough.
+The official presentation `AegisOps_Official_Pitch.pptx` will be generated directly using the official hackathon template, including all team info, architecture diagrams, and the prototype walkthrough.
 
 ---
 
