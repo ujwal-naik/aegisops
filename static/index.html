@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AegisOps // Tactical Disaster Coordination Engine</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="topbar">
+    <div class="logo-badge">
+      <div class="pulsing-dot"></div>
+      <h1 class="mono" style="font-size: 1.05rem; font-weight: 700; letter-spacing: 0.05em;">
+        AEGISOPS <span style="color: var(--cyan-accent); font-weight: 400;">// DISASTER TACTICAL OS</span>
+      </h1>
+      <span class="badge badge-unit mono" style="font-size: 0.65rem;">OFFLINE-FIRST DTN MESH</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 0.6rem;">
+      <button class="btn btn-primary" onclick="openReportModal()">
+        <span>+ Submit SOS Report</span>
+      </button>
+      <button class="btn btn-danger" onclick="triggerAutoDispatch()">
+        <span>⚡ Run ICS Auto-Dispatch</span>
+      </button>
+      <button class="btn btn-dark" onclick="simulateMeshSync()">
+        <span>🔄 Simulate Drone Sync</span>
+      </button>
+      <button class="btn btn-dark" onclick="seedScenario()">
+        <span>🎲 Reload Scenario</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main View -->
+  <main class="main-container">
+    <!-- Map Section -->
+    <section class="map-container">
+      <div id="map"></div>
+    </section>
+
+    <!-- Sidebar Section -->
+    <aside class="sidebar">
+      <!-- Live Metrics Header -->
+      <div class="metrics-row">
+        <div class="metric-card red">
+          <div class="val" id="metric-red">0</div>
+          <div class="label">Immediate (Red)</div>
+        </div>
+        <div class="metric-card yellow">
+          <div class="val" id="metric-yellow">0</div>
+          <div class="label">Delayed (Yellow)</div>
+        </div>
+        <div class="metric-card green">
+          <div class="val" id="metric-green">0</div>
+          <div class="label">Minor (Green)</div>
+        </div>
+        <div class="metric-card fleet">
+          <div class="val" id="metric-fleet">0/0</div>
+          <div class="label">Fleet Ready</div>
+        </div>
+      </div>
+
+      <!-- Feed Filter Tabs -->
+      <div class="tabs-bar">
+        <button class="tab-btn active" onclick="setTab('ALL', this)">All Incidents</button>
+        <button class="tab-btn" onclick="setTab('RED', this)">Immediate</button>
+        <button class="tab-btn" onclick="setTab('YELLOW', this)">Delayed</button>
+        <button class="tab-btn" onclick="setTab('FLEET', this)">Rescue Units</button>
+      </div>
+
+      <!-- Incidents List -->
+      <div class="incidents-list" id="incidents-feed">
+        <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+          Loading tactical feed...
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- New SOS Report Modal -->
+  <div class="modal-overlay" id="report-modal">
+    <div class="modal-box">
+      <h2 style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 700;">Submit Emergency Field Report</h2>
+      <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1rem;">
+        Automated NLP will extract START triage category, victim counts, and hazard flags.
+      </p>
+
+      <form id="report-form" onsubmit="submitReport(event)">
+        <div class="form-group">
+          <label>Location / Landmark Name</label>
+          <input type="text" id="rep-location" class="form-input" placeholder="e.g. City Bus Stand, 3rd Lane" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;" class="form-group">
+          <div>
+            <label>Latitude</label>
+            <input type="number" step="0.0001" id="rep-lat" class="form-input" value="12.8750" required>
+          </div>
+          <div>
+            <label>Longitude</label>
+            <input type="number" step="0.0001" id="rep-lon" class="form-input" value="74.8520" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Raw Transmission / Witness Report</label>
+          <textarea id="rep-text" class="form-input" rows="4" placeholder="Describe symptoms, rising water, trapped survivors, bleeding..." required></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+          <button type="button" class="btn btn-dark" onclick="closeReportModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Process & Triage</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
